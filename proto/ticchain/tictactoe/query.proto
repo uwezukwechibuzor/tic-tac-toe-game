@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package ticchain.tictactoe;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "ticchain/tictactoe/params.proto";
+import "ticchain/tictactoe/game.proto";
+import "ticchain/tictactoe/leaderboard.proto";
+
+option go_package = "tic-chain/x/tictactoe/types";
+
+// Query defines the gRPC querier service.
+service Query {
+
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/params";
+  }
+
+  // Queries a list of Game items.
+  rpc Game(QueryGetGameRequest) returns (QueryGetGameResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/game/{id}";
+  }
+  rpc GameAll(QueryAllGameRequest) returns (QueryAllGameResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/games";
+  }
+  rpc GameBoard(QueryGetGameBoardRequest) returns (QueryGetGameBoardResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/game-board/{id}";
+  }
+  rpc GameBoardAll(QueryAllGameBoardRequest)
+      returns (QueryAllGameBoardResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/game-boards";
+  }
+
+  // Queries a list of Leaderboard items.
+  rpc LeaderboardAll(QueryAllLeaderboardRequest)
+      returns (QueryAllLeaderboardResponse) {
+    option (google.api.http).get = "/tic-chain/tictactoe/leaderboard";
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+
+  // params holds all the parameters of this module.
+  Params params = 1
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+}
+
+message QueryGetGameRequest { uint64 id = 1; }
+
+message QueryGetGameResponse { Game Game = 1 [ (gogoproto.nullable) = false ]; }
+
+message QueryGetGameBoardRequest { uint64 id = 1; }
+
+message QueryGetGameBoardResponse { string board = 1; }
+
+message QueryAllGameRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllGameResponse {
+  repeated Game Game = 1 [ (gogoproto.nullable) = false ];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryAllGameBoardRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllGameBoardResponse {
+  repeated string board = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryAllLeaderboardRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllLeaderboardResponse {
+  Leaderboard Leaderboard = 1 [ (gogoproto.nullable) = false ];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

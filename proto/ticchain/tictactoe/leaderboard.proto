@@ -1,0 +1,8 @@
+syntax = "proto3";
+package ticchain.tictactoe;
+
+option go_package = "tic-chain/x/tictactoe/types";
+
+import "ticchain/tictactoe/game.proto";
+
+message Leaderboard { repeated Player players = 1; }

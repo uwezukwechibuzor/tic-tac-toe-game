@@ -1,0 +1,26 @@
+syntax = "proto3";
+package ticchain.tictactoe;
+
+option go_package = "tic-chain/x/tictactoe/types";
+
+message Game {
+  uint64 gameId = 1;
+  string adminAddress = 2;
+  string Status = 3;
+  string board = 4;
+  string NextMove = 5;
+  string Winner = 6;
+
+  // First player
+  Player first_player = 7;
+
+  // Opponent (Second player)
+  Player second_player = 8;
+}
+
+// Message representing a player.
+message Player {
+  string player_id = 1;
+  string symbol = 2; // X or O
+  uint64 points = 3;
+}

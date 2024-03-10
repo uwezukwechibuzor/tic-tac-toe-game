@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ticchain.tttibc;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "ticchain/tttibc/params.proto";
+import "ticchain/tttibc/game.proto";
+
+option go_package = "tic-chain/x/tttibc/types";
+
+// GenesisState defines the tttibc module's genesis state.
+message GenesisState {
+
+  // params defines all the parameters of the module.
+  Params params = 1
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+  string port_id = 2;
+  repeated Game gameList = 3 [ (gogoproto.nullable) = false ];
+  uint64 gameCount = 4;
+}

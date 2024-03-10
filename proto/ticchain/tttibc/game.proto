@@ -1,0 +1,6 @@
+syntax = "proto3";
+package ticchain.tttibc;
+
+option go_package = "tic-chain/x/tttibc/types";
+
+message Game { uint64 id = 1; }

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package ticchain.tictactoe;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "ticchain/tictactoe/params.proto";
+import "ticchain/tictactoe/game.proto";
+import "ticchain/tictactoe/leaderboard.proto";
+
+option go_package = "tic-chain/x/tictactoe/types";
+
+// GenesisState defines the tictactoe module's genesis state.
+message GenesisState {
+
+  // params defines all the parameters of the module.
+  Params params = 1
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+  repeated Game gameList = 2 [ (gogoproto.nullable) = false ];
+  uint64 gameCount = 3;
+  string adminAddress = 4;
+  repeated Leaderboard leaderboardList = 5 [ (gogoproto.nullable) = false ];
+  uint64 leaderboardCount = 6;
+}

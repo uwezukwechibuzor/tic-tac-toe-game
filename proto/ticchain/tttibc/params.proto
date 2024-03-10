@@ -1,0 +1,13 @@
+syntax = "proto3";
+package ticchain.tttibc;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "tic-chain/x/tttibc/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "ticchain/x/tttibc/Params";
+  option (gogoproto.equal) = true;
+}

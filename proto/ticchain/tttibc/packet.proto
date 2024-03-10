@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package ticchain.tttibc;
+
+option go_package = "tic-chain/x/tttibc/types";
+
+message TttibcPacketData {
+  oneof packet {
+    NoData noData = 1;
+    IbcgamePacketData ibcgamePacket = 2;
+  }
+}
+
+message NoData {}
+
+// IbcgamePacketData defines a struct for the packet payload
+message IbcgamePacketData {}
+
+// IbcgamePacketAck defines a struct for the packet acknowledgment
+message IbcgamePacketAck { string gameId = 1; }

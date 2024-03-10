@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package ticchain.tttibc;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "ticchain/tttibc/params.proto";
+import "ticchain/tttibc/game.proto";
+
+option go_package = "tic-chain/x/tttibc/types";
+
+// Query defines the gRPC querier service.
+service Query {
+
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/tic-chain/tttibc/params";
+  }
+
+  // Queries a list of Game items.
+  rpc Game(QueryGetGameRequest) returns (QueryGetGameResponse) {
+    option (google.api.http).get = "/tic-chain/tttibc/game/{id}";
+  }
+  rpc GameAll(QueryAllGameRequest) returns (QueryAllGameResponse) {
+    option (google.api.http).get = "/tic-chain/tttibc/game";
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+
+  // params holds all the parameters of this module.
+  Params params = 1
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+}
+
+message QueryGetGameRequest { uint64 id = 1; }
+
+message QueryGetGameResponse { Game Game = 1 [ (gogoproto.nullable) = false ]; }
+
+message QueryAllGameRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllGameResponse {
+  repeated Game Game = 1 [ (gogoproto.nullable) = false ];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
